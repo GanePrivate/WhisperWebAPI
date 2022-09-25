@@ -1,0 +1,10 @@
+fastapi
+uvicorn
+python-multipart
+pysummarization
+mecab-python3
+unidic-lite
+nltk
+requests
+jiwer
+numpy
