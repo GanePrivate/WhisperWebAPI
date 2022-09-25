@@ -43,7 +43,7 @@ def save_upload_file_tmp(upload_file: UploadFile) -> Path:
               400: {"model": res.UploadErrorResponseModel}
           },
           tags=["FileController"])
-async def receive_file(
+def receive_file(
     file: UploadFile = File(description="Audio File"),
     model_name: Union[str, None] = Form(default="small", description="使用するモデル名(tiny, base, small, medium, largeのどれか)<br>※未指定の場合はsmall"),
 ):
