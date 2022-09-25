@@ -45,7 +45,7 @@ def save_upload_file_tmp(upload_file: UploadFile) -> Path:
           tags=["FileController"])
 async def receive_file(
     file: UploadFile = File(description="Audio File"),
-    model_name: Union[str, None] = Form(default="small", description="使用するモデル名(tiny, base, small, medium, largeのどれか)")
+    model_name: Union[str, None] = Form(default="small", description="使用するモデル名(tiny, base, small, medium, largeのどれか)<br>※未指定の場合はsmall"),
 ):
 
     start = time.time()
@@ -60,8 +60,11 @@ async def receive_file(
     finally:
         tmp_path.unlink()  # 一時ファイルを削除する
 
+    # dictからリストのキーの値のみ取得
+    result = {k: result[k] for k in ['text']}
+
     # 文章の要約を生成
     # result['summary'] = Summarizer(result["text"]).get_summary_text()
-    print(result["text"])
+    print(result)
     print(f'TIME = {time.time() - start} sec')
-    return JSONResponse(content=jsonable_encoder(result['text']))
+    return JSONResponse(content=jsonable_encoder(result))
