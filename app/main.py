@@ -12,6 +12,12 @@ from pathlib import Path
 from tempfile import NamedTemporaryFile
 
 
+
+import torch
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+print(DEVICE)
+
+
 app = FastAPI()
 
 # CORSを回避するために追加（今回の肝）
