@@ -10,11 +10,17 @@ from util.text_summarization import Summarizer
 import shutil
 from pathlib import Path
 from tempfile import NamedTemporaryFile
+# import torch
 
 
-
-import torch
-
+# モデルのロード
+models = {
+    "tiny": whisper.load_model("tiny"),
+    "base": whisper.load_model("base"),
+    "small": whisper.load_model("small"),
+    "medium": whisper.load_model("medium"),
+    "large": whisper.load_model("large")
+}
 
 app = FastAPI()
 
@@ -53,13 +59,15 @@ def receive_file(
 ):
 
     start = time.time()
-    DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-    print(DEVICE)
+
+    # GPUが使えるかどうかの確認
+    # DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+    # print(DEVICE)
 
     # 受け取ったファイルを一時ファイルとして保存
     tmp_path = save_upload_file_tmp(file)
     try:
-        model = whisper.load_model(model_name)
+        model = models[model_name]
         result = model.transcribe(str(tmp_path))
     except:
         raise HTTPException(detail=f"文字起こし処理に失敗しました", status_code=status.HTTP_400_BAD_REQUEST)
