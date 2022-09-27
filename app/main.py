@@ -13,15 +13,6 @@ from tempfile import NamedTemporaryFile
 # import torch
 
 
-# モデルのロード
-models = {
-    "tiny": whisper.load_model("tiny"),
-    "base": whisper.load_model("base"),
-    "small": whisper.load_model("small"),
-    "medium": whisper.load_model("medium"),
-    "large": whisper.load_model("large")
-}
-
 app = FastAPI()
 
 # CORSを回避するために追加（今回の肝）
@@ -67,7 +58,7 @@ def receive_file(
     # 受け取ったファイルを一時ファイルとして保存
     tmp_path = save_upload_file_tmp(file)
     try:
-        model = models[model_name]
+        model = whisper.load_model(model_name)
         result = model.transcribe(str(tmp_path))
     except:
         raise HTTPException(detail=f"文字起こし処理に失敗しました", status_code=status.HTTP_400_BAD_REQUEST)

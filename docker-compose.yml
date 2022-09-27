@@ -6,7 +6,8 @@ services:
     volumes:
       - ./app:/app
     build: ./
-    shm_size: '32gb'
+    # shm_size: '32gb'
+    ipc: "host"
     ports:
       - 8089:8080
     runtime: nvidia
