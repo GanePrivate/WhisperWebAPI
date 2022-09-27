@@ -9,4 +9,6 @@ services:
     shm_size: '32gb'
     ports:
       - 8089:8080
+    image: nvidia/cuda:10.2-base
+    command: nvidia-smi
     runtime: nvidia
