@@ -14,8 +14,6 @@ from tempfile import NamedTemporaryFile
 
 
 import torch
-DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-print(DEVICE)
 
 
 app = FastAPI()
@@ -55,6 +53,8 @@ def receive_file(
 ):
 
     start = time.time()
+    DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+    print(DEVICE)
 
     # 受け取ったファイルを一時ファイルとして保存
     tmp_path = save_upload_file_tmp(file)
