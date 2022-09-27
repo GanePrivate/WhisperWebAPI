@@ -10,3 +10,5 @@ services:
     ports:
       - 8089:8080
     runtime: nvidia
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=all
